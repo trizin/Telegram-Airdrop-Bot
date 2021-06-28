@@ -1,0 +1,2 @@
+python_telegram_bot==13.1
+telegram==0.0.1

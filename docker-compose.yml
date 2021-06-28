@@ -1,0 +1,18 @@
+version: "3.9"
+services:
+  bot_service:
+    build: .
+    env_file:
+      - ./.env
+    depends_on: mongodb
+  mongodb:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: secret_password
+    volumes:
+      - mongo-db:/data/db
+
+volumes:
+  mongo-db:
