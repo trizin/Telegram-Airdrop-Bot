@@ -1,4 +1,4 @@
-# Easy to use Telegram Airdrop Bot
+# Telegram Airdrop Bot
 
 This bot has all you need and very simple to use!
 ### Some of the great futures
