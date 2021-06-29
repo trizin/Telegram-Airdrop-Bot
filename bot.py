@@ -88,13 +88,13 @@ PROCEED_MESSAGE = f"""
 ⭐️ 1 {COIN_SYMBOL} = {COIN_PRICE}
 
 🔹 Airdrop Reward = *{AIRDROP_AMOUNT} {COIN_SYMBOL}*
-🔹 Extra reward per referral = *{"{:,.2f}".format(REFERRAL_REWARD)} {COIN_SYMBOL}* (MAX:{MAX_REFS})
+🔹 Extra reward per referral = *{"{:,.2f}".format(REFERRAL_REWARD)} {COIN_SYMBOL}* (max {MAX_REFS})
 
 📢 Airdrop Rules
 
 ✏️ Mandatory Tasks:
-🔹 Join our telegram channels
-🔹 Follow our Twitter page
+- Join our telegram channels
+- Follow our Twitter page
 
 NOTE: Users found Cheating would be disqualified & banned immediately.
 
