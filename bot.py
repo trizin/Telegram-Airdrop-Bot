@@ -77,7 +77,10 @@ if(COIN_PRICE == "0"):
     SYMBOL = ""
 else:
     SYMBOL = f"⭐️ 1 {COIN_SYMBOL} = {COIN_PRICE}"
-
+if(EXPLORER_URL):
+    EXPLORER_URL = f"Contract: {EXPLORER_URL}"
+if(WEBSITE_URL):
+    WEBSITE_URL = f"Website: {WEBSITE_URL}"
 WELCOME_MESSAGE = f"""
 Hello, NAME! I am your friendly {COIN_NAME} Airdrop bot
 
@@ -94,7 +97,6 @@ PROCEED_MESSAGE = f"""
 🔹 Extra reward per referral = *{"{:,.2f}".format(REFERRAL_REWARD)} {COIN_SYMBOL}* (max {MAX_REFS})
 {SYMBOL}
 
-
 📢 Airdrop Rules
 
 ✏️ Mandatory Tasks:
@@ -105,9 +107,9 @@ NOTE: Users found Cheating would be disqualified & banned immediately.
 
 Airdrop Date: *{AIRDROP_DATE}*
 
-Website: {WEBSITE_URL}
-
 {EXPLORER_URL}
+
+{WEBSITE_URL}
 """
 
 MAKE_SURE_TELEGRAM = f"""
