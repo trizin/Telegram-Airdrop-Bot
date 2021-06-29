@@ -130,7 +130,7 @@ Rewards would be sent out automatically to your {AIRDROP_NETWORK} address on the
 🔸 Stay in the telegram channels
 🔸 Follow all the social media channels for the updates
 
-Your personal referral link: (+{"{:,.2f}".format(REFERRAL_REWARD)} {COIN_SYMBOL} for each referral)
+Your personal referral link (+{"{:,.2f}".format(REFERRAL_REWARD)} {COIN_SYMBOL} for each referral)
 REPLACEME
 """
 
@@ -312,7 +312,7 @@ def end_conversation(update, context):
     # users.update({"userId": refferal}, info)
     # print("Updated refferal")
 
-    update.message.reply_text(JOINED.replace("REPLACEME", url), reply_markup=ReplyKeyboardMarkup(reply_keyboard))
+    update.message.reply_text(JOINED.replace("REPLACEME", url), reply_markup=ReplyKeyboardMarkup(reply_keyboard), parse_mode=telegram.ParseMode.MARKDOWN)
     return LOOP
 
 
