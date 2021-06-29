@@ -32,7 +32,7 @@ This bot has all you need and very simple to use!
 - `COIN_NAME` Is the coin name
     - Example: `Bitcoin, Ethereum`
 - `AIRDROP_AMOUNT` How many tokens are you going to give
-    - Example: `10,000`
+    - Example: `10000` *do not* include "," must be float number
 - `AIRDROP_DATE` Date of reward distrubition
     - Example: `20 July 2021`
 - `BOT_TOKEN` The token you get from @BotFather
@@ -48,7 +48,7 @@ This bot has all you need and very simple to use!
 - `ADMIN_USERNAME` Your telegram username
     - Example: `johnboe`
 - `MAX_USERS` Maximum number of participants
-    - Example: `1000`
+    - Example: `1000` *do not* include "," must be float number
 - `MAX_REFS` Maximum number of referrals per participant
     - Example: `5`
 - `CAPTCHA_ENABLED` Enable or disable captcha at start
