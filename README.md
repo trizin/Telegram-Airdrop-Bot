@@ -4,20 +4,28 @@ This bot has all you need and very simple to use!
 ### Some of the great futures
 
 - Ask user to follow twitter and join telegram groups, multipe groups and twitter links are supported.
-- Checks if the wallet address is correct.
+- Check if a correct wallet address has been provided
 - Very easy to use.
 - Persistance, the chat will remain persistant even if you restart the bot.
-- Blocks duplicate wallets
-- Blocks duplicate twitter usernames
+- Blocks duplicate wallets & twitter usernames
+- Refferal support
+- Start, stop, pause airdrop anytime.
+- Captcha support
 
-## Usage
+### Admin Commands
+
+- `/list` Returns the list of all participants in json format.
+- `/stats` Returns number of participants, referrals, distribution amounts
+- `/bot stop|pause|start` Manage airdrop status; stop, pause or start.
+
+## Installation with Docker
 - [Edit the .env.example file](#env-file)
 - Run `cp .env.example .env`
 - Run `docker-compose up -d`
 - That's all!
 
-## Env file
-### Important (must be edited)
+## Env Variables
+### Important
 
 - `COIN_SYMBOL` Is the coin symbol
     - Example: `BNB, ETH`
@@ -31,10 +39,20 @@ This bot has all you need and very simple to use!
     - Example: `1313552295:AAFxDGKhlco-FoWw-uyxInotlKvalidNEz-Q`
 - `COIN_PRICE` Current price of coin
     - Example: `$0.01`
-- `REFERRAL_REWARD` Extra reward users will get for each referral
+- `REFERRAL_REWARD` Extra reward participants will get for each referral
     - Example: `1000`
 - `WEBSITE_URL` Your website url
     - Example: `https://bitcoin.com`
+- `EXPLORER_URL` Blockchain explorer url
+    - Example: `https://etherscan.io/address/0x0000000000000000000000000000000000000000`
+- `ADMIN_USERNAME` Your telegram username
+    - Example: `johnboe`
+- `MAX_USERS` Maximum number of participants
+    - Example: `1000`
+- `MAX_REFS` Maximum number of referrals per participant
+    - Example: `5`
+- `CAPTCHA_ENABLED` Enable or disable captcha at start
+    - Example: `YES` or `NO`
 - `TWITTER_LINKS` Twitter page links seperated by comma
     - Example: `https://twitter.com/bitcoin,`
     - Example: `https://twitter.com/bitcoin,https://twitter.com/ethereum`
@@ -43,12 +61,12 @@ This bot has all you need and very simple to use!
     - Example: `https://t.me/multi,https://t.me/ple`
 
 
-### Not Important (can be set to anything)
+### Not Very Important
+
+Leave these to default unless you know what you do.
 
 - `MONGO_INITDB_ROOT_USERNAME` Mongodb username
-- `MONGO_INITDB_ROOT_USERNAME` Mongodb password 
+- `MONGO_INITDB_ROOT_USERNAME` Mongodb password
+- `MONGO_INITDB_IP` Mongodb IP
+- `MONGO_INITDB_PORT` Mongodb Port
 
-## TODO
-
-- [ ] Make Telegram & Twitter follow optional
-- [ ] Admin dashboard

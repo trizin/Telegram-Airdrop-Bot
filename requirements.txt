@@ -1,5 +1,6 @@
 pymongo==3.11.2
+PyAutoGUI==0.9.52
 python_telegram_bot==13.1
-python-dotenv==0.18.0
+multicolorcaptcha==1.1.1
 telegram==0.0.1
 cryptography==3.1.1
