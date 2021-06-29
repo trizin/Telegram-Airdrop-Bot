@@ -77,13 +77,12 @@ if(COIN_PRICE == "0"):
     SYMBOL = ""
 else:
     SYMBOL = f"\n⭐️ 1 {COIN_SYMBOL} = {COIN_PRICE}"
-if(EXPLORER_URL):
-    EXPLORER_URL = f"Contract: {EXPLORER_URL}"
-if(WEBSITE_URL):
-    WEBSITE_URL = f"Website: {WEBSITE_URL}"
+if(EXPLORER_URL != ""):
+    EXPLORER_URL = f"\nContract: {EXPLORER_URL}"
+if(WEBSITE_URL != ""):
+    WEBSITE_URL = f"\nWebsite: {WEBSITE_URL}"
 WELCOME_MESSAGE = f"""
 Hello, NAME! I am your friendly {COIN_NAME} Airdrop bot
-
 {SYMBOL}
 🔸For Joining - Get {AIRDROP_AMOUNT} {COIN_SYMBOL}
 ⭐️ For each referral - Get {"{:,.2f}".format(REFERRAL_REWARD)} {COIN_SYMBOL}
@@ -104,11 +103,7 @@ PROCEED_MESSAGE = f"""
 
 NOTE: Users found Cheating would be disqualified & banned immediately.
 
-Airdrop Date: *{AIRDROP_DATE}*
-
-{EXPLORER_URL}
-
-{WEBSITE_URL}
+Airdrop Date: *{AIRDROP_DATE}*{EXPLORER_URL}{WEBSITE_URL}
 """
 
 MAKE_SURE_TELEGRAM = f"""
