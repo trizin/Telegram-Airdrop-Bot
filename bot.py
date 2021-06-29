@@ -76,7 +76,7 @@ dispatcher = updater.dispatcher
 if(COIN_PRICE == "0"):
     SYMBOL = ""
 else:
-    SYMBOL = f"⭐️ 1 {COIN_SYMBOL} = {COIN_PRICE}"
+    SYMBOL = f"\n⭐️ 1 {COIN_SYMBOL} = {COIN_PRICE}"
 if(EXPLORER_URL):
     EXPLORER_URL = f"Contract: {EXPLORER_URL}"
 if(WEBSITE_URL):
@@ -94,8 +94,7 @@ tasks = ""
 
 PROCEED_MESSAGE = f"""
 🔹 Airdrop Reward = *{AIRDROP_AMOUNT} {COIN_SYMBOL}*
-🔹 Extra reward per referral = *{"{:,.2f}".format(REFERRAL_REWARD)} {COIN_SYMBOL}* (max {MAX_REFS})
-{SYMBOL}
+🔹 Extra reward per referral = *{"{:,.2f}".format(REFERRAL_REWARD)} {COIN_SYMBOL}* (max {MAX_REFS}){SYMBOL}
 
 📢 Airdrop Rules
 
