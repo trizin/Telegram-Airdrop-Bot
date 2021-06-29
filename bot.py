@@ -470,11 +470,13 @@ def setStatus(update, context):
     arg = context.args[0]
     if(arg == "stop"):
         setBotStatus("STOPPED")
+        update.message.reply_text("Airdrop stopped")
     if(arg == "pause"):
         setBotStatus("PAUSED")
+        update.message.reply_text("Airdrop paused")
     if(arg == "start"):
         setBotStatus("ON")
-    update.message.reply_text("Done")
+        update.message.reply_text("Airdrop started")
 
 
 dispatcher.add_handler(CommandHandler("list", getList))
