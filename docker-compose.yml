@@ -1,10 +1,13 @@
-version: "3.9"
+version: "3"
 services:
   bot_service:
     build: .
     env_file:
       - ./.env
-    depends_on: mongodb
+    depends_on:
+      - mongodb
+    volumes:
+      - convbot:/app/conversationbot
   mongodb:
     image: mongo
     restart: always
@@ -16,3 +19,4 @@ services:
 
 volumes:
   mongo-db:
+  convbot:

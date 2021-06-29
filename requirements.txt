@@ -1,2 +1,5 @@
+pymongo==3.11.2
 python_telegram_bot==13.1
+python-dotenv==0.18.0
 telegram==0.0.1
+cryptography==3.1.1
