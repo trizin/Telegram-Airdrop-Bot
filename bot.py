@@ -73,10 +73,15 @@ updater = Updater(token=BOT_TOKEN, use_context=True, persistence=persistence)
 dispatcher = updater.dispatcher
 
 # %% Message Strings
+if(COIN_PRICE == "0"):
+    SYMBOL = ""
+else:
+    SYMBOL = f"⭐️ 1 {COIN_SYMBOL} = {COIN_PRICE}"
+
 WELCOME_MESSAGE = f"""
 Hello, NAME! I am your friendly {COIN_NAME} Airdrop bot
 
-🔹1 {COIN_SYMBOL} = {COIN_PRICE}
+{SYMBOL}
 🔸For Joining - Get {AIRDROP_AMOUNT} {COIN_SYMBOL}
 ⭐️ For each referral - Get {"{:,.2f}".format(REFERRAL_REWARD)} {COIN_SYMBOL}
 
@@ -85,10 +90,10 @@ Click "🚀 Join Airdrop" to proceed"""
 tasks = ""
 
 PROCEED_MESSAGE = f"""
-⭐️ 1 {COIN_SYMBOL} = {COIN_PRICE}
-
 🔹 Airdrop Reward = *{AIRDROP_AMOUNT} {COIN_SYMBOL}*
 🔹 Extra reward per referral = *{"{:,.2f}".format(REFERRAL_REWARD)} {COIN_SYMBOL}* (max {MAX_REFS})
+{SYMBOL}
+
 
 📢 Airdrop Rules
 
