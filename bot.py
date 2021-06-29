@@ -128,7 +128,7 @@ JOINED = f"""
 Thank you!
 Rewards would be sent out automatically to your {AIRDROP_NETWORK} address on the {AIRDROP_DATE}
 
-*Don't forget to:*
+Don't forget to:
 🔸 Stay in the telegram channels
 🔸 Follow all the social media channels for the updates
 
@@ -314,7 +314,7 @@ def end_conversation(update, context):
     # users.update({"userId": refferal}, info)
     # print("Updated refferal")
 
-    update.message.reply_text(JOINED.replace("REPLACEME", url), reply_markup=ReplyKeyboardMarkup(reply_keyboard), parse_mode=telegram.ParseMode.MARKDOWN)
+    update.message.reply_text(JOINED.replace("REPLACEME", url), reply_markup=ReplyKeyboardMarkup(reply_keyboard))
     return LOOP
 
 
