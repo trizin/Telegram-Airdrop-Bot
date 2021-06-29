@@ -103,7 +103,8 @@ PROCEED_MESSAGE = f"""
 
 NOTE: Users found Cheating would be disqualified & banned immediately.
 
-Airdrop Date: *{AIRDROP_DATE}*{EXPLORER_URL}{WEBSITE_URL}
+Airdrop Date: *{AIRDROP_DATE}*{EXPLORER_URL}
+{WEBSITE_URL}
 """
 
 MAKE_SURE_TELEGRAM = f"""
