@@ -76,14 +76,13 @@ dispatcher = updater.dispatcher
 if(COIN_PRICE == "0"):
     SYMBOL = ""
 else:
-    SYMBOL = f"⭐️ 1 {COIN_SYMBOL} = {COIN_PRICE}"
-if(EXPLORER_URL):
-    EXPLORER_URL = f"Contract: {EXPLORER_URL}"
-if(WEBSITE_URL):
-    WEBSITE_URL = f"Website: {WEBSITE_URL}"
+    SYMBOL = f"\n⭐️ 1 {COIN_SYMBOL} = {COIN_PRICE}"
+if(EXPLORER_URL != ""):
+    EXPLORER_URL = f"\nContract: {EXPLORER_URL}"
+if(WEBSITE_URL != ""):
+    WEBSITE_URL = f"\nWebsite: {WEBSITE_URL}"
 WELCOME_MESSAGE = f"""
 Hello, NAME! I am your friendly {COIN_NAME} Airdrop bot
-
 {SYMBOL}
 🔸For Joining - Get {AIRDROP_AMOUNT} {COIN_SYMBOL}
 ⭐️ For each referral - Get {"{:,.2f}".format(REFERRAL_REWARD)} {COIN_SYMBOL}
@@ -94,8 +93,7 @@ tasks = ""
 
 PROCEED_MESSAGE = f"""
 🔹 Airdrop Reward = *{AIRDROP_AMOUNT} {COIN_SYMBOL}*
-🔹 Extra reward per referral = *{"{:,.2f}".format(REFERRAL_REWARD)} {COIN_SYMBOL}* (max {MAX_REFS})
-{SYMBOL}
+🔹 Extra reward per referral = *{"{:,.2f}".format(REFERRAL_REWARD)} {COIN_SYMBOL}* (max {MAX_REFS}){SYMBOL}
 
 📢 Airdrop Rules
 
@@ -105,10 +103,7 @@ PROCEED_MESSAGE = f"""
 
 NOTE: Users found Cheating would be disqualified & banned immediately.
 
-Airdrop Date: *{AIRDROP_DATE}*
-
-{EXPLORER_URL}
-
+Airdrop Date: *{AIRDROP_DATE}*{EXPLORER_URL}
 {WEBSITE_URL}
 """
 
