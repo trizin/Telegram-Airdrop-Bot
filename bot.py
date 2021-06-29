@@ -430,8 +430,6 @@ conv_handler = ConversationHandler(
     persistent=True,
 )
 
-dispatcher.add_handler(conv_handler)
-
 
 # %% Admin commands
 def getList(update, context):
@@ -482,7 +480,7 @@ def setStatus(update, context):
 dispatcher.add_handler(CommandHandler("list", getList))
 dispatcher.add_handler(CommandHandler("stats", getStats))
 dispatcher.add_handler(CommandHandler("bot", setStatus))
-
+dispatcher.add_handler(conv_handler)
 # %% start the bot
 updater.start_polling()
 updater.idle()
