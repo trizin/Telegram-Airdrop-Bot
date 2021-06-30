@@ -200,9 +200,11 @@ def checkCaptcha(update, context):
 def start(update, context):
     user = update.message.from_user
     CAPTCHA_DATA[user.id] = False
-    USERINFO[user.id] = {}
+    if not user.id in USERINFO:
+        USERINFO[user.id] = {}
+
     refferal = update.message.text.replace("/start", "").strip()
-    if refferal != "" and refferal != user.id:
+    if refferal != "" and refferal != user.id and "ref" not in USERINFO[user.id]:
         USERINFO[user.id]["ref"] = refferal
         print("Using refferal")
     else:
