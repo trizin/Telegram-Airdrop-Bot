@@ -274,6 +274,8 @@ def follow_twitter(update, context):
 
 def submit_address(update, context):
     user = update.message.from_user
+    if not user.id in USERINFO:
+        return startAgain(update, context)
     USERINFO[user.id].update({"twitter_username": update.message.text.strip()})
     update.message.reply_text(text=SUBMIT_BEP20_TEXT, parse_mode=telegram.ParseMode.MARKDOWN, reply_markup=ReplyKeyboardMarkup(
         [["Cancel"]]
@@ -293,6 +295,8 @@ def getName(user):
 
 def end_conversation(update, context):
     user = update.message.from_user
+    if not user.id in USERINFO:
+        return startAgain(update, context)
     USERINFO[user.id].update({"bep20": update.message.text})
     USERINFO[user.id].update({"userId": user.id})
     USERINFO[user.id].update({"chatId": update.effective_chat.id})
@@ -347,6 +351,15 @@ def cancel(update: Update, context: CallbackContext) -> int:
     user = update.message.from_user
     update.message.reply_text(
         'Goodbye!', reply_markup=ReplyKeyboardMarkup([['/start']])
+    )
+    return ConversationHandler.END
+
+
+def startAgain(update: Update, context: CallbackContext) -> int:
+    """Cancels and ends the conversation."""
+    user = update.message.from_user
+    update.message.reply_text(
+        'An error occured, please start the bot again.', reply_markup=ReplyKeyboardMarkup([['/start']])
     )
     return ConversationHandler.END
 
