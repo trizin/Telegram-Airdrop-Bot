@@ -115,8 +115,8 @@ Do no forget to join our Telegram channel
 FOLLOW_TWITTER_TEXT = f"""
 🔹 Follow our Twitter page
 {TWITTER_LINKS}
-Type in *your Twitter username* to proceed
 """
+
 
 SUBMIT_BEP20_TEXT = f"""
 Type in *your Wallet Address*
@@ -264,7 +264,8 @@ def follow_telegram(update, context):
 
 
 def follow_twitter(update, context):
-    update.message.reply_text(text=FOLLOW_TWITTER_TEXT, parse_mode=telegram.ParseMode.MARKDOWN, reply_markup=ReplyKeyboardMarkup(
+    update.message.reply_text(text=FOLLOW_TWITTER_TEXT, parse_mode=telegram.ParseMode.MARKDOWN)
+    update.message.reply_text(text="Type in *your Twitter username* to proceed", parse_mode=telegram.ParseMode.MARKDOWN, reply_markup=ReplyKeyboardMarkup(
         [["Cancel"]]
     ))
     return SUBMIT_ADDRESS
