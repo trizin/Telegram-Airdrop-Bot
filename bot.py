@@ -140,8 +140,8 @@ WITHDRAWAL_TEXT = f"""
 Withdrawals would be sent out automatically to your {AIRDROP_NETWORK} address on the {AIRDROP_DATE}
 NOTE: Users found Cheating would be disqualified & banned immediately."""
 
-BALANCE_TEXT = """
-IART Airdrop Balance: *IARTBALANCE*
+BALANCE_TEXT = f"""
+{COIN_NAME} Airdrop Balance: *IARTBALANCE*
 Referral Balance: *REFERRALBALANCE*
 """
 
