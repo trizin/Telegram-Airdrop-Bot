@@ -2,6 +2,7 @@ import telegram
 import logging
 import pickle
 
+from utils import mongo
 from utils.env import *
 from utils.message_strings import *
 from utils.mongo import users
@@ -41,33 +42,21 @@ def setBotStatus(status):
     pickle.dump(BOT_STATUS, open(STATUS_PATH, "wb"))
 
 
-def getUserInfo(id):
-    user = ""
-    for x in users.find({"userId": id}):
-        user = x
-        refs = users.find({"ref": str(id)})
-        user["refCount"] = refs.count()
-        # if "refCount" not in user:
-        # user["refCount"] = 0
-        # user["refList"] = []
-    return user
-
-
-def maxNumberReached(update, context):
+def maxNumberReached(update):
     update.message.reply_text(
         "Hey! Thanks for your interest but it seems like the maximum amount of users has been reached."
     )
     return ConversationHandler.END
 
 
-def botStopped(update, context):
+def botStopped(update):
     update.message.reply_text(
         "The airdrop has been completed. Thanks for you interest."
     )
     return ConversationHandler.END
 
 
-def botPaused(update, context):
+def botPaused(update):
     update.message.reply_text(
         "The airdrop has been temporarily paused, please try again later",
         reply_markup=ReplyKeyboardMarkup([["/start"]]),
@@ -111,7 +100,7 @@ def start(update, context):
 
     NAME = getName(user)
 
-    if getUserInfo(user.id) != "":
+    if mongo.getUserInfo(user.id) != "":
         update.message.reply_text(
             text="It seems like you have already joined!",
             reply_markup=ReplyKeyboardMarkup(reply_keyboard),
@@ -293,7 +282,7 @@ def startAgain(update: Update) -> int:
 
 def loopAnswer(update, context):
     user = update.message.from_user
-    info = getUserInfo(user.id)
+    info = mongo.getUserInfo(user.id)
     print(info)
     message = update.message.text
     reply = ""
@@ -406,7 +395,7 @@ conv_handler = ConversationHandler(
 
 
 # %% Admin commands
-def getList(update, context):
+def getList(update):
     user = update.message.from_user
     if user.username != ADMIN_USERNAME:
         return
@@ -422,7 +411,7 @@ def getList(update, context):
         update.message.reply_document(document=file, filename="list.json")
 
 
-def getStats(update, context):
+def getStats(update):
     user = update.message.from_user
     if user.username != ADMIN_USERNAME:
         return
