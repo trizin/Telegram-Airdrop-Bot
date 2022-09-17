@@ -218,23 +218,6 @@ def sureWantTo(update, context):
         return LOOP
 
 
-def cancel(update) -> int:
-    """Cancels and ends the conversation."""
-    user = update.message.from_user
-    update.message.reply_text("Goodbye!", reply_markup=create_markup([["/start"]]))
-    return ConversationHandler.END
-
-
-def startAgain(update) -> int:
-    """Cancels and ends the conversation."""
-    user = update.message.from_user
-    update.message.reply_text(
-        "An error occured, please start the bot again.",
-        reply_markup=create_markup([["/start"]]),
-    )
-    return ConversationHandler.END
-
-
 def loopAnswer(update, context):
     user = update.message.from_user
     info = mongo.getUserInfo(user.id)

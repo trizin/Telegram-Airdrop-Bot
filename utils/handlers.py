@@ -7,6 +7,8 @@ from telegram import (
 
 from telegram.ext import (
     ConversationHandler,
+    Filters,
+    MessageHandler,
 )
 from utils.keyboard import create_markup
 from utils.message_strings import *
@@ -46,3 +48,21 @@ def follow_telegram(update, context):
     )
 
     return FOLLOW_TWITTER
+
+
+def cancel(update, context) -> int:
+    """Cancels and ends the conversation."""
+    update.message.reply_text("Goodbye!", reply_markup=create_markup([["/start"]]))
+    return ConversationHandler.END
+
+
+def startAgain(update, context) -> int:
+    """Cancels and ends the conversation."""
+    update.message.reply_text(
+        "An error occured, please start the bot again.",
+        reply_markup=create_markup([["/start"]]),
+    )
+    return ConversationHandler.END
+
+
+cancelHandler = MessageHandler(Filters.regex("^Cancel$"), cancel)
