@@ -29,11 +29,4 @@ TWITTER_LINKS = TWITTER_LINKS.split(",")
 TELEGRAM_LINKS = TELEGRAM_LINKS.split(",")
 TWITTER_LINKS = "\n".join(TWITTER_LINKS)
 TELEGRAM_LINKS = "\n".join(TELEGRAM_LINKS)
-
-
 STATUS_PATH = "./conversationbot/botconfig.p"
-BOT_STATUS = {}
-if os.path.exists(STATUS_PATH):
-    pickle.load(open(STATUS_PATH, "rb"))
-else:
-    BOT_STATUS = {"status": "ON"}

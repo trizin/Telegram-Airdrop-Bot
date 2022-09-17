@@ -3,6 +3,7 @@ import logging
 import pickle
 
 from utils import mongo
+from utils.bot_status import get_bot_status, set_bot_status
 from utils.env import *
 from utils.message_strings import *
 from utils.mongo import users
@@ -35,11 +36,6 @@ logging.basicConfig(
 persistence = PicklePersistence(filename="conversationbot/conversationbot")
 updater = Updater(token=BOT_TOKEN, use_context=True, persistence=persistence)
 dispatcher = updater.dispatcher
-
-
-def setBotStatus(status):
-    BOT_STATUS["status"] = status
-    pickle.dump(BOT_STATUS, open(STATUS_PATH, "wb"))
 
 
 def maxNumberReached(update, context):
@@ -111,10 +107,10 @@ def start(update, context):
     if count >= MAX_USERS:
         return maxNumberReached(update, context)
 
-    if BOT_STATUS["status"] == "STOPPED":
+    if get_bot_status() == "STOPPED":
         return botStopped(update, context)
 
-    if BOT_STATUS["status"] == "PAUSED":
+    if get_bot_status() == "PAUSED":
         return botPaused(update, context)
 
     if CAPTCHA_ENABLED == "YES" and CAPTCHA_DATA[user.id] != True:
@@ -432,13 +428,13 @@ def setStatus(update, context):
         return
     arg = context.args[0]
     if arg == "stop":
-        setBotStatus("STOPPED")
+        set_bot_status("STOPPED")
         update.message.reply_text("Airdrop stopped")
     if arg == "pause":
-        setBotStatus("PAUSED")
+        set_bot_status("PAUSED")
         update.message.reply_text("Airdrop paused")
     if arg == "start":
-        setBotStatus("ON")
+        set_bot_status("ON")
         update.message.reply_text("Airdrop started")
 
 
