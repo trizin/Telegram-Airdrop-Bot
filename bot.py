@@ -1,6 +1,5 @@
 import telegram
 import logging
-import pickle
 
 from utils import mongo
 from utils.bot_status import get_bot_status, set_bot_status
@@ -11,9 +10,6 @@ from utils.keyboard import create_markup, get_reply_keyboard_markup
 from utils.handlers import *
 
 
-from telegram import (
-    Update,
-)
 from bson.json_util import dumps
 from multicolorcaptcha import CaptchaGenerator
 from utils.jokes import getJoke
@@ -235,14 +231,14 @@ def sureWantTo(update, context):
         return LOOP
 
 
-def cancel(update: Update) -> int:
+def cancel(update) -> int:
     """Cancels and ends the conversation."""
     user = update.message.from_user
     update.message.reply_text("Goodbye!", reply_markup=create_markup([["/start"]]))
     return ConversationHandler.END
 
 
-def startAgain(update: Update) -> int:
+def startAgain(update) -> int:
     """Cancels and ends the conversation."""
     user = update.message.from_user
     update.message.reply_text(
