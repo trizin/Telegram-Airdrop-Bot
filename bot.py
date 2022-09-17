@@ -10,7 +10,6 @@ from utils.keyboard import create_markup, get_reply_keyboard_markup
 from utils.handlers import *
 from utils.states import *
 
-from bson.json_util import dumps
 from multicolorcaptcha import CaptchaGenerator
 from utils.jokes import getJoke
 from telegram.ext import (
@@ -116,30 +115,6 @@ def generateCaptcha(update, context):
     return CAPTCHASTATE
 
 
-def submit_details(update, context):
-    update.message.reply_text(
-        text=PROCEED_MESSAGE, parse_mode=telegram.ParseMode.MARKDOWN
-    )
-    update.message.reply_text(
-        text='Please click on "Submit Details" to proceed',
-        parse_mode=telegram.ParseMode.MARKDOWN,
-        reply_markup=create_markup([["Submit Details"], ["Cancel"]]),
-    )
-    return FOLLOW_TELEGRAM
-
-
-def follow_twitter(update, context):
-    update.message.reply_text(
-        text=FOLLOW_TWITTER_TEXT, parse_mode=telegram.ParseMode.MARKDOWN
-    )
-    update.message.reply_text(
-        text="Type in *your Twitter username* to proceed",
-        parse_mode=telegram.ParseMode.MARKDOWN,
-        reply_markup=create_markup([["Cancel"]]),
-    )
-    return SUBMIT_ADDRESS
-
-
 def submit_address(update, context):
     user = update.message.from_user
     if not user.id in USERINFO:
@@ -197,13 +172,8 @@ def end_conversation(update, context):
     return LOOP
 
 
-def getRandomJoke():
-    return getJoke()
-
-
 # %% Start bot
 
-cancelHandler = MessageHandler(Filters.regex("^Cancel$"), cancel)
 states = {
     PROCEED: [
         MessageHandler(Filters.regex("^🚀 Join Airdrop$"), submit_details),
@@ -238,51 +208,6 @@ conv_handler = ConversationHandler(
 
 
 # %% Admin commands
-def getList(update, context):
-    user = update.message.from_user
-    if user.username != ADMIN_USERNAME:
-        return
-    list = users.find({})
-
-    with open("users.json", "w") as file:
-        file.write("[")
-        for document in list:
-            file.write(dumps(document))
-            file.write(",")
-        file.write("]")
-    with open("users.json", "r") as file:
-        update.message.reply_document(document=file, filename="list.json")
-
-
-def getStats(update, context):
-    user = update.message.from_user
-    if user.username != ADMIN_USERNAME:
-        return
-    list = users.find({})
-    refes = users.find({"ref": {"$ne": False}}).count()
-    reply = f"""
-Currently there are *{list.count()} users* joined the airdrop!
-Currently there are *{refes} users* joined by referrals
-A total of *{"{:,.2f}".format(float(AIRDROP_AMOUNT.replace(",",""))*list.count())} {COIN_SYMBOL}* will be distributed as participation rewards
-A total of *{"{:,.2f}".format(REFERRAL_REWARD*refes)} {COIN_SYMBOL}* referral rewards will be distributed
-"""
-    update.message.reply_text(reply, parse_mode=telegram.ParseMode.MARKDOWN)
-
-
-def setStatus(update, context):
-    user = update.message.from_user
-    if user.username != ADMIN_USERNAME:
-        return
-    arg = context.args[0]
-    if arg == "stop":
-        set_bot_status("STOPPED")
-        update.message.reply_text("Airdrop stopped")
-    if arg == "pause":
-        set_bot_status("PAUSED")
-        update.message.reply_text("Airdrop paused")
-    if arg == "start":
-        set_bot_status("ON")
-        update.message.reply_text("Airdrop started")
 
 
 dispatcher.add_handler(CommandHandler("list", getList))
