@@ -1,10 +1,6 @@
 import os
 import pickle
 
-from dotenv import load_dotenv
-
-load_dotenv()
-
 
 COIN_SYMBOL = os.environ["COIN_SYMBOL"]
 COIN_NAME = os.environ["COIN_NAME"]

@@ -42,21 +42,21 @@ def setBotStatus(status):
     pickle.dump(BOT_STATUS, open(STATUS_PATH, "wb"))
 
 
-def maxNumberReached(update):
+def maxNumberReached(update, context):
     update.message.reply_text(
         "Hey! Thanks for your interest but it seems like the maximum amount of users has been reached."
     )
     return ConversationHandler.END
 
 
-def botStopped(update):
+def botStopped(update, context):
     update.message.reply_text(
         "The airdrop has been completed. Thanks for you interest."
     )
     return ConversationHandler.END
 
 
-def botPaused(update):
+def botPaused(update, context):
     update.message.reply_text(
         "The airdrop has been temporarily paused, please try again later",
         reply_markup=ReplyKeyboardMarkup([["/start"]]),
@@ -242,7 +242,7 @@ def getRandomJoke():
     return getJoke()
 
 
-def sureWantTo(update):
+def sureWantTo(update, context):
     user = update.message.from_user
     message = update.message.text
     print(message)
@@ -395,7 +395,7 @@ conv_handler = ConversationHandler(
 
 
 # %% Admin commands
-def getList(update):
+def getList(update, context):
     user = update.message.from_user
     if user.username != ADMIN_USERNAME:
         return
@@ -411,7 +411,7 @@ def getList(update):
         update.message.reply_document(document=file, filename="list.json")
 
 
-def getStats(update):
+def getStats(update, context):
     user = update.message.from_user
     if user.username != ADMIN_USERNAME:
         return
