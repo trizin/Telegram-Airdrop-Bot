@@ -1,3 +1,6 @@
+import telegram
+
+
 from telegram import (
     ReplyKeyboardMarkup,
 )
@@ -5,6 +8,9 @@ from telegram import (
 from telegram.ext import (
     ConversationHandler,
 )
+from utils.keyboard import create_markup
+from utils.message_strings import *
+from utils.states import *
 
 
 def maxNumberReached(update, context):
@@ -27,3 +33,16 @@ def botPaused(update, context):
         reply_markup=ReplyKeyboardMarkup([["/start"]]),
     )
     return ConversationHandler.END
+
+
+def follow_telegram(update, context):
+    update.message.reply_text(
+        text=MAKE_SURE_TELEGRAM, parse_mode=telegram.ParseMode.MARKDOWN
+    )
+    update.message.reply_text(
+        text='Please click on "Done" to proceed',
+        parse_mode=telegram.ParseMode.MARKDOWN,
+        reply_markup=create_markup([["Done"], ["Cancel"]]),
+    )
+
+    return FOLLOW_TWITTER

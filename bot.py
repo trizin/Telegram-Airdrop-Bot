@@ -8,7 +8,7 @@ from utils.message_strings import *
 from utils.mongo import users
 from utils.keyboard import create_markup, get_reply_keyboard_markup
 from utils.handlers import *
-
+from utils.states import *
 
 from bson.json_util import dumps
 from multicolorcaptcha import CaptchaGenerator
@@ -126,19 +126,6 @@ def submit_details(update, context):
         reply_markup=create_markup([["Submit Details"], ["Cancel"]]),
     )
     return FOLLOW_TELEGRAM
-
-
-def follow_telegram(update, context):
-    update.message.reply_text(
-        text=MAKE_SURE_TELEGRAM, parse_mode=telegram.ParseMode.MARKDOWN
-    )
-    update.message.reply_text(
-        text='Please click on "Done" to proceed',
-        parse_mode=telegram.ParseMode.MARKDOWN,
-        reply_markup=create_markup([["Done"], ["Cancel"]]),
-    )
-
-    return FOLLOW_TWITTER
 
 
 def follow_twitter(update, context):
@@ -313,16 +300,7 @@ I'm not sure what you meant, but here is a joke for you!
 
 
 # %% Start bot
-(
-    PROCEED,
-    FOLLOW_TELEGRAM,
-    FOLLOW_TWITTER,
-    SUBMIT_ADDRESS,
-    END_CONVERSATION,
-    LOOP,
-    SUREWANTTO,
-    CAPTCHASTATE,
-) = range(8)
+
 cancelHandler = MessageHandler(Filters.regex("^Cancel$"), cancel)
 states = {
     PROCEED: [
