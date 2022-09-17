@@ -7,9 +7,11 @@ from utils.bot_status import get_bot_status, set_bot_status
 from utils.env import *
 from utils.message_strings import *
 from utils.mongo import users
+from utils.keyboard import create_markup, get_reply_keyboard_markup
+from utils.handlers import *
+
 
 from telegram import (
-    ReplyKeyboardMarkup,
     Update,
 )
 from bson.json_util import dumps
@@ -38,28 +40,6 @@ updater = Updater(token=BOT_TOKEN, use_context=True, persistence=persistence)
 dispatcher = updater.dispatcher
 
 
-def maxNumberReached(update, context):
-    update.message.reply_text(
-        "Hey! Thanks for your interest but it seems like the maximum amount of users has been reached."
-    )
-    return ConversationHandler.END
-
-
-def botStopped(update, context):
-    update.message.reply_text(
-        "The airdrop has been completed. Thanks for you interest."
-    )
-    return ConversationHandler.END
-
-
-def botPaused(update, context):
-    update.message.reply_text(
-        "The airdrop has been temporarily paused, please try again later",
-        reply_markup=ReplyKeyboardMarkup([["/start"]]),
-    )
-    return ConversationHandler.END
-
-
 def checkCaptcha(update, context):
     user = update.message.from_user
     text = update.message.text
@@ -74,7 +54,7 @@ def checkCaptcha(update, context):
         )
         update.message.reply_text(
             text=WELCOME_MESSAGE.replace("NAME", NAME),
-            reply_markup=ReplyKeyboardMarkup([["🚀 Join Airdrop"]]),
+            reply_markup=create_markup([["🚀 Join Airdrop"]]),
             parse_mode=telegram.ParseMode.MARKDOWN,
         )
         CAPTCHA_DATA[user.id] = True
@@ -99,7 +79,7 @@ def start(update, context):
     if mongo.getUserInfo(user.id) != "":
         update.message.reply_text(
             text="It seems like you have already joined!",
-            reply_markup=ReplyKeyboardMarkup(reply_keyboard),
+            reply_markup=get_reply_keyboard_markup(),
         )
         return LOOP
 
@@ -118,7 +98,7 @@ def start(update, context):
     else:
         update.message.reply_text(
             text=WELCOME_MESSAGE.replace("NAME", NAME),
-            reply_markup=ReplyKeyboardMarkup([["🚀 Join Airdrop"]]),
+            reply_markup=create_markup([["🚀 Join Airdrop"]]),
             parse_mode=telegram.ParseMode.MARKDOWN,
         )
     return PROCEED
@@ -147,7 +127,7 @@ def submit_details(update, context):
     update.message.reply_text(
         text='Please click on "Submit Details" to proceed',
         parse_mode=telegram.ParseMode.MARKDOWN,
-        reply_markup=ReplyKeyboardMarkup([["Submit Details"], ["Cancel"]]),
+        reply_markup=create_markup([["Submit Details"], ["Cancel"]]),
     )
     return FOLLOW_TELEGRAM
 
@@ -159,7 +139,7 @@ def follow_telegram(update, context):
     update.message.reply_text(
         text='Please click on "Done" to proceed',
         parse_mode=telegram.ParseMode.MARKDOWN,
-        reply_markup=ReplyKeyboardMarkup([["Done"], ["Cancel"]]),
+        reply_markup=create_markup([["Done"], ["Cancel"]]),
     )
 
     return FOLLOW_TWITTER
@@ -172,7 +152,7 @@ def follow_twitter(update, context):
     update.message.reply_text(
         text="Type in *your Twitter username* to proceed",
         parse_mode=telegram.ParseMode.MARKDOWN,
-        reply_markup=ReplyKeyboardMarkup([["Cancel"]]),
+        reply_markup=create_markup([["Cancel"]]),
     )
     return SUBMIT_ADDRESS
 
@@ -185,7 +165,7 @@ def submit_address(update, context):
     update.message.reply_text(
         text=SUBMIT_BEP20_TEXT,
         parse_mode=telegram.ParseMode.MARKDOWN,
-        reply_markup=ReplyKeyboardMarkup([["Cancel"]]),
+        reply_markup=create_markup([["Cancel"]]),
     )
     return END_CONVERSATION
 
@@ -229,7 +209,7 @@ def end_conversation(update, context):
 
     update.message.reply_text(
         JOINED.replace("REPLACEME", url),
-        reply_markup=ReplyKeyboardMarkup(reply_keyboard),
+        reply_markup=get_reply_keyboard_markup(),
     )
     return LOOP
 
@@ -243,16 +223,14 @@ def sureWantTo(update, context):
     message = update.message.text
     print(message)
     if message == "YES":
-        update.message.reply_text(
-            "Goodbye!", reply_markup=ReplyKeyboardMarkup([["/start"]])
-        )
+        update.message.reply_text("Goodbye!", reply_markup=create_markup([["/start"]]))
         users.delete_one({"userId": user.id})
         return ConversationHandler.END
 
     if message == "NO":
         update.message.reply_text(
             "Oh thanks god, I thought I lost you",
-            reply_markup=ReplyKeyboardMarkup(reply_keyboard),
+            reply_markup=get_reply_keyboard_markup(),
         )
         return LOOP
 
@@ -260,9 +238,7 @@ def sureWantTo(update, context):
 def cancel(update: Update) -> int:
     """Cancels and ends the conversation."""
     user = update.message.from_user
-    update.message.reply_text(
-        "Goodbye!", reply_markup=ReplyKeyboardMarkup([["/start"]])
-    )
+    update.message.reply_text("Goodbye!", reply_markup=create_markup([["/start"]]))
     return ConversationHandler.END
 
 
@@ -271,7 +247,7 @@ def startAgain(update: Update) -> int:
     user = update.message.from_user
     update.message.reply_text(
         "An error occured, please start the bot again.",
-        reply_markup=ReplyKeyboardMarkup([["/start"]]),
+        reply_markup=create_markup([["/start"]]),
     )
     return ConversationHandler.END
 
@@ -305,7 +281,7 @@ Here is *your referral link*
     if message == "Quit Airdrop":
         update.message.reply_text(
             "Are you sure want to quit the Airdrop? All your data will be deleted",
-            reply_markup=ReplyKeyboardMarkup([["YES"], ["NO"]]),
+            reply_markup=create_markup([["YES"], ["NO"]]),
         )
         return SUREWANTTO
 
@@ -334,18 +310,13 @@ I'm not sure what you meant, but here is a joke for you!
 """
     update.message.reply_text(
         reply,
-        reply_markup=ReplyKeyboardMarkup(reply_keyboard),
+        reply_markup=get_reply_keyboard_markup(),
         parse_mode=telegram.ParseMode.MARKDOWN,
     )
     return LOOP
 
 
 # %% Start bot
-reply_keyboard = [
-    ["💰 Balance", "ℹ️ Airdrop Info"],
-    ["💸 Withdrawal", "🔗 Ref Link"],
-    ["💾 My Data", "Quit Airdrop"],
-]
 (
     PROCEED,
     FOLLOW_TELEGRAM,
