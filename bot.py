@@ -1,9 +1,14 @@
-# %% Dependencies
+import telegram
+import logging
+import pickle
+
+from utils.env import *
+from utils.message_strings import *
+from utils.mongo import users
+
 from telegram import (
     ReplyKeyboardMarkup,
-    ReplyKeyboardRemove,
     Update,
-    InlineKeyboardMarkup,
 )
 from bson.json_util import dumps
 from multicolorcaptcha import CaptchaGenerator
@@ -14,18 +19,9 @@ from telegram.ext import (
     MessageHandler,
     Filters,
     ConversationHandler,
-    CallbackContext,
     PicklePersistence,
 )
-from telegram.utils import helpers
-import telegram
-import pymongo
-import logging
-import pickle
 
-from utils.env import *
-from utils.message_strings import *
-from utils.mongo import users
 
 USERINFO = {}  # holds user information
 CAPTCHA_DATA = {}
