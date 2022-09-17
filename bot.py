@@ -13,7 +13,7 @@ from telegram import (
 )
 from bson.json_util import dumps
 from multicolorcaptcha import CaptchaGenerator
-from jokes import getJoke
+from utils.jokes import getJoke
 from telegram.ext import (
     Updater,
     CommandHandler,
